@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { WordleService } from "../services/wordle.service";
-import { ANSWERS, ROW_SIZE, WORD_SIZE } from "../static-data/words";
+import { ANSWERS, WORD_SIZE } from "../static-data/words";
 import { Alert, AlertType } from "../types/Alert";
 import { Guess } from "../types/Guess";
+import { KeyboardSummary } from "../types/KeyboardSummary";
 
 interface UseWorldeProps {
 	gameNumber: number;
@@ -13,6 +14,7 @@ interface UseWordleHook {
 	currentRow: number;
 	alert: Alert | null;
 	isGameOver: boolean;
+	summary: KeyboardSummary;
 
 	submitHandler: () => void;
 	letterHandler: (letter: string) => void;
@@ -28,6 +30,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 	const [currentRow, setCurrentRow] = useState<number>(0);
 	const [currentWord, setCurrentWord] = useState<string>("");
 	const [alert, setAlert] = useState<Alert | null>(null);
+	const [summary, setSummary] = useState<KeyboardSummary>({ correct: new Set(), incorrect: new Set(), wrongPosition: new Set() });
 
 	/**
 	 * Event Handler - Enter/Submit
@@ -49,6 +52,8 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 
 		WordleService.evaluateGuess(currGuess, CORRECT_WORD);
 		updateGuesses(currGuess);
+
+		setSummary(WordleService.buildSummary(guesses));
 
 		if (guessedCorrectly) {
 			setAlert({ message: `Congratulations, you got it right!`, type: AlertType.Success });
@@ -100,6 +105,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 		currentRow,
 		guesses,
 		isGameOver: gameOver,
+		summary,
 		letterHandler,
 		deleteHandler,
 		submitHandler

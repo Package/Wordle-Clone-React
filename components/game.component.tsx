@@ -11,7 +11,7 @@ interface GameComponentProps {
 
 const GameComponent: FC<GameComponentProps> = ({ gameNumber }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(ROW_SIZE).fill(0), []);
-	const { isGameOver, alert, currentRow, guesses, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber });
+	const { isGameOver, alert, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber });
 
 	return (
 		<div className="game-container">
@@ -32,6 +32,7 @@ const GameComponent: FC<GameComponentProps> = ({ gameNumber }) => {
 				submitHandler={submitHandler}
 				letterHandler={letterHandler}
 				deleteHandler={deleteHandler}
+				summary={summary}
 			/>
 		</div>
 	)

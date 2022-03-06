@@ -57,17 +57,17 @@ a, a:visited {
 }
 
 .correct {
-  background: var(--colour-green);
+  background: var(--colour-green) !important;
   border: none;
 }
 
 .position {
-  background: var(--colour-yellow);
+  background: var(--colour-yellow) !important;
   border: none;
 }
 
 .incorrect {
-  background: var(--colour-dark-grey);
+  background: var(--colour-dark-grey) !important;
   border: none;
 }
 
@@ -118,4 +118,12 @@ a, a:visited {
 .alert-warning {
   color: #383d41;
   background-color: #e2e3e5;
+}
+
+@media (max-width:600px)  { 
+  /* Decrease keyboard size on tablet or smaller. */
+  .letter {
+    padding: .5rem;
+    font-size: .9rem;
+  }
 }

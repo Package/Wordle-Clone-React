@@ -1,8 +1,40 @@
 import { ANSWERS, ROW_SIZE, VALID_WORDS, WORD_SIZE } from "../static-data/words";
 import { Guess } from "../types/Guess";
+import { KeyboardSummary } from "../types/KeyboardSummary";
 import { LetterState } from "../types/LetterState";
 
 export class WordleService {
+	static buildSummary(guesses: Guess[]): KeyboardSummary {
+		const correct = new Set<string>();
+		const incorrect = new Set<string>();
+		const position = new Set<string>();
+
+		for (let guess of guesses) {
+			for (let index = 0; index < guess.word.length; index++) {
+				const state: LetterState = guess.states[index];
+				const letter: string = guess.word[index];
+
+				switch (state) {
+					case LetterState.Correct:
+						correct.add(letter);
+						break;
+					case LetterState.Incorrect:
+						incorrect.add(letter);
+						break;
+					case LetterState.WrongPosition:
+						position.add(letter);
+						break;
+				}
+			}
+		}
+
+		return {
+			correct,
+			incorrect,
+			wrongPosition: position
+		};
+	}
+
 	static getDefaultGuesses(): Guess[] {
 		return new Array(ROW_SIZE).fill({}).map(_ => ({ word: "", states: [] }));
 	}
