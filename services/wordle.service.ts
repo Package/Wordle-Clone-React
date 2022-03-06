@@ -5,9 +5,11 @@ import { LetterState } from "../types/LetterState";
 
 export class WordleService {
 	static buildSummary(guesses: Guess[]): KeyboardSummary {
-		const correct = new Set<string>();
-		const incorrect = new Set<string>();
-		const position = new Set<string>();
+		const summary: KeyboardSummary = {
+			correct: [],
+			incorrect: [],
+			wrongPosition: []
+		}
 
 		for (let guess of guesses) {
 			for (let index = 0; index < guess.word.length; index++) {
@@ -16,23 +18,19 @@ export class WordleService {
 
 				switch (state) {
 					case LetterState.Correct:
-						correct.add(letter);
+						summary.correct.push(letter);
 						break;
 					case LetterState.Incorrect:
-						incorrect.add(letter);
+						summary.incorrect.push(letter);
 						break;
 					case LetterState.WrongPosition:
-						position.add(letter);
+						summary.wrongPosition.push(letter);
 						break;
 				}
 			}
 		}
 
-		return {
-			correct,
-			incorrect,
-			wrongPosition: position
-		};
+		return summary;
 	}
 
 	static getDefaultGuesses(): Guess[] {

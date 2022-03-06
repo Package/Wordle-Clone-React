@@ -1,17 +1,30 @@
-import React, { FC, useMemo } from 'react'
+import { useRouter } from 'next/router';
+import React, { FC, useEffect, useMemo } from 'react'
 import useWordle from '../hooks/useWordle';
+import { StorageService } from '../services/storage.service';
 import { ROW_SIZE } from '../static-data/words';
+import { WordleState } from '../types/WordleState';
 import { AlertComponent } from './alert.component';
 import KeyboardComponent from './keyboard.component';
 import TileRowComponent from './tile-row.component';
 
 interface GameComponentProps {
 	gameNumber: number;
+	initialState?: WordleState;
 }
 
-const GameComponent: FC<GameComponentProps> = ({ gameNumber }) => {
+const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(ROW_SIZE).fill(0), []);
-	const { isGameOver, alert, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber });
+	const { isGameOver, alert, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber, initialState });
+
+	useEffect(() => {
+		StorageService.saveLastPlayedGame(gameNumber);
+	}, [gameNumber]);
+
+	function startNewGame() {
+		StorageService.clearGameState();
+		window.location.replace(`/?gameNumber=${gameNumber + 1}`);
+	}
 
 	return (
 		<div className="game-container">
@@ -19,13 +32,12 @@ const GameComponent: FC<GameComponentProps> = ({ gameNumber }) => {
 
 			{isGameOver && (
 				<div className="game-over">
-					<p>SHARE BUTTON</p>
-					<a href={`/?gameNumber=${gameNumber + 1}`}>Play again?</a>
+					<button className="game-over-btn" onClick={startNewGame}>New Game?</button>
 				</div>
 			)}
 
 			{ROWS.map((_, index) => (
-				<TileRowComponent key={`row-${index}`} isCurrent={currentRow === index} guess={guesses[index]} />
+				<TileRowComponent key={`row-${index}`} isCurrent={isGameOver ? false : currentRow === index} guess={guesses[index]} />
 			))}
 
 			<KeyboardComponent

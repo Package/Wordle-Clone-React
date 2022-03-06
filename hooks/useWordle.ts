@@ -1,12 +1,15 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { StorageService } from "../services/storage.service";
 import { WordleService } from "../services/wordle.service";
 import { ANSWERS, WORD_SIZE } from "../static-data/words";
 import { Alert, AlertType } from "../types/Alert";
 import { Guess } from "../types/Guess";
 import { KeyboardSummary } from "../types/KeyboardSummary";
+import { WordleState } from "../types/WordleState";
 
 interface UseWorldeProps {
 	gameNumber: number;
+	initialState?: WordleState;
 }
 
 interface UseWordleHook {
@@ -21,16 +24,34 @@ interface UseWordleHook {
 	deleteHandler: () => void;
 }
 
+const DEFAULT_STATE: WordleState = {
+	currentRow: 0,
+	currentWord: "",
+	gameOver: false,
+	guesses: [],
+	summary: { correct: [], incorrect: [], wrongPosition: [] }
+}
+
 export default function useWordle(props: UseWorldeProps): UseWordleHook {
 	const CORRECT_WORD = useMemo<string>(() => ANSWERS[props.gameNumber ?? 0], []);
 
-	const [guesses, setGuesses] = useState<Guess[]>(WordleService.getDefaultGuesses());
-
-	const [gameOver, setGameOver] = useState<boolean>(false);
-	const [currentRow, setCurrentRow] = useState<number>(0);
-	const [currentWord, setCurrentWord] = useState<string>("");
 	const [alert, setAlert] = useState<Alert | null>(null);
-	const [summary, setSummary] = useState<KeyboardSummary>({ correct: new Set(), incorrect: new Set(), wrongPosition: new Set() });
+
+	const [gameOver, setGameOver] = useState<boolean>(props.initialState?.gameOver ?? false);
+	const [currentRow, setCurrentRow] = useState<number>(props.initialState?.currentRow ?? 0);
+	const [currentWord, setCurrentWord] = useState<string>(props.initialState?.currentWord ?? "");
+	const [guesses, setGuesses] = useState<Guess[]>(props.initialState?.guesses ?? WordleService.getDefaultGuesses());
+	const [summary, setSummary] = useState<KeyboardSummary>(props.initialState?.summary ?? { correct: [], incorrect: [], wrongPosition: [] });
+
+	useEffect(() => {
+		StorageService.saveGameState({
+			currentRow,
+			guesses,
+			gameOver,
+			currentWord,
+			summary
+		});
+	}, [currentRow, guesses, gameOver, currentWord, summary])
 
 	/**
 	 * Event Handler - Enter/Submit

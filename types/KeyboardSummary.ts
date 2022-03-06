@@ -1,5 +1,5 @@
 export interface KeyboardSummary {
-	correct: Set<string>;
-	wrongPosition: Set<string>;
-	incorrect: Set<string>;
+	correct: Array<string>;
+	wrongPosition: Array<string>;
+	incorrect: Array<string>;
 }

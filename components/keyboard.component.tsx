@@ -16,8 +16,6 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 	const LETTER_REGEX = useMemo<RegExp>(() => new RegExp("^[a-zA-Z]{1}$"), []);
 	const TYPE_REF = useRef<HTMLInputElement>(null);
 
-	console.log(summary);
-
 	useEffect(() => {
 		// Trigger auto-focus to capture key press events once component is ready.
 		autoFocus();
@@ -53,11 +51,11 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 	function getLetterHighlight(letter: string): string | null {
 		const lowerLetter = letter.toUpperCase();
 
-		if (summary.correct.has(lowerLetter)) {
+		if (summary.correct.includes(lowerLetter)) {
 			return "correct";
-		} else if (summary.wrongPosition.has(lowerLetter)) {
+		} else if (summary.wrongPosition.includes(lowerLetter)) {
 			return "position";
-		} else if (summary.incorrect.has(lowerLetter)) {
+		} else if (summary.incorrect.includes(lowerLetter)) {
 			return "incorrect";
 		}
 
