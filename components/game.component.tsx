@@ -15,7 +15,7 @@ interface GameComponentProps {
 
 const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(ROW_SIZE).fill(0), []);
-	const { isGameOver, alert, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber, initialState });
+	const { isGameOver, alert, invalidIndex, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber, initialState });
 
 	useEffect(() => {
 		StorageService.saveLastPlayedGame(gameNumber);
@@ -37,7 +37,7 @@ const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => 
 			)}
 
 			{ROWS.map((_, index) => (
-				<TileRowComponent key={`row-${index}`} isCurrent={isGameOver ? false : currentRow === index} guess={guesses[index]} />
+				<TileRowComponent key={`row-${index}`} invalid={invalidIndex === index} isCurrent={isGameOver ? false : currentRow === index} guess={guesses[index]} />
 			))}
 
 			<KeyboardComponent

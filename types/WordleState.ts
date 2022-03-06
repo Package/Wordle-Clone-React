@@ -1,3 +1,4 @@
+import { Alert } from "./Alert";
 import { Guess } from "./Guess";
 import { KeyboardSummary } from "./KeyboardSummary";
 
@@ -7,4 +8,5 @@ export interface WordleState {
 	currentRow: number;
 	currentWord: string;
 	summary: KeyboardSummary;
+	alert?: Alert;
 }

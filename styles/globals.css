@@ -81,6 +81,14 @@ a, a:visited {
   border: none;
 }
 
+.invalid {
+  border: 1px solid lightcoral;
+}
+
+.red {
+  color: lightcoral;
+}
+
 .keyboard {
   margin: 1rem 0;
 }
@@ -111,23 +119,23 @@ a, a:visited {
   padding: 1rem;
   margin: .5rem auto;
   width: 100%;
-  max-width: 600px;
   border-radius: 4px;
+  max-width: fit-content;
 }
 
 .alert-error {
-  color: #721c24;
-  background: #f8d7da;
+  background: #721c24;
+  color: #f8d7da;
 }
 
 .alert-success {
-  color: #155724;
-  background-color: #d4edda;
+  background: #155724;
+  color: #d4edda;
 }
 
 .alert-warning {
-  color: #383d41;
-  background-color: #e2e3e5;
+  background: #383d41;
+  color: #e2e3e5;
 }
 
 @media (max-width:600px)  { 

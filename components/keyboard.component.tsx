@@ -24,19 +24,15 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 	useEffect(() => {
 		// Re-trigger focus on input when page gains focus again. e.g. think user switched tabs etc.
 		window.addEventListener("focus", autoFocus);
+		window.addEventListener("click", autoFocus);
 
 		return () => {
 			window.removeEventListener("focus", autoFocus);
+			window.removeEventListener("click", autoFocus);
 		};
 	}, []);
 
-	function autoFocus() {
-		console.log("Autofocusing.");
-
-		if (TYPE_REF.current) {
-			TYPE_REF.current.focus();
-		}
-	}
+	const autoFocus = () => TYPE_REF.current?.focus();
 
 	function keyHandler(event: React.KeyboardEvent) {
 		if (event.key === "Backspace") {

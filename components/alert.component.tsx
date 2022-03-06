@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Alert, AlertType } from '../types/Alert'
 
 interface AlertComponentProps {
-	alert: Alert | null
+	alert?: Alert
 }
 
 export const AlertComponent: FC<AlertComponentProps> = ({ alert }) => {
