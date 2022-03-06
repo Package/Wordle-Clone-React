@@ -1,14 +1,12 @@
 import React, { FC, useMemo } from 'react'
-import { LetterState } from '../types/Letter';
 
 interface KeyboardComponentProps {
 	letterHandler: (letter: string) => void;
 	submitHandler: () => void;
 	deleteHandler: () => void;
-	letterMap: Map<string, LetterState>;
 }
 
-const KeyboardComponent: FC<KeyboardComponentProps> = ({ letterHandler, submitHandler, deleteHandler, letterMap }) => {
+const KeyboardComponent: FC<KeyboardComponentProps> = ({ letterHandler, submitHandler, deleteHandler }) => {
 	const QWERTY_ROW_ONE = useMemo<Array<string>>(() => "QWERTYUIOP".split(""), []);
 	const QWERTY_ROW_TWO = useMemo<Array<string>>(() => "ASDFGHJKL".split(""), []);
 	const QWERTY_ROW_THREE = useMemo<Array<string>>(() => "ZXCVBNM".split(""), []);

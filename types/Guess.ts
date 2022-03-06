@@ -1,6 +1,6 @@
-import { Letter } from "./Letter";
+import { LetterState } from "./LetterState";
 
 export interface Guess {
-	letters: Array<Letter>;
-	submitted: boolean;
+	word: string;
+	states: LetterState[];
 }

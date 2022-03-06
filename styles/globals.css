@@ -81,3 +81,26 @@ header {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.alert {
+  padding: 1rem;
+  margin: .5rem auto;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 4px;
+}
+
+.alert-error {
+  color: #721c24;
+  background: #f8d7da;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+}
+
+.alert-warning {
+  color: #383d41;
+  background-color: #e2e3e5;
+}

@@ -1,22 +1,22 @@
 import React, { FC, useMemo } from 'react'
 import { WORD_SIZE } from '../static-data/words';
-import { LetterState } from '../types/Letter';
+import { Guess } from '../types/Guess';
+import { LetterState } from '../types/LetterState';
 
 interface TileRowComponentProps {
 	isCurrent: boolean;
-	word: string;
-	letterMap: Map<string, LetterState>;
+	guess?: Guess
 }
 
-const TileRowComponent: FC<TileRowComponentProps> = ({ isCurrent, word, letterMap }) => {
+const TileRowComponent: FC<TileRowComponentProps> = ({ isCurrent, guess }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(WORD_SIZE).fill(0), []);
 
-	const getHighlightClass = (letter: string): string | null => {
-		if (isCurrent || !letterMap.has(letter)) {
+	const getHighlightClass = (index: number): string | null => {
+		if (isCurrent || !guess) {
 			return null;
 		}
 
-		switch (letterMap.get(letter)) {
+		switch (guess.states[index]) {
 			case LetterState.Correct:
 				return "correct"
 			case LetterState.WrongPosition:
@@ -31,9 +31,9 @@ const TileRowComponent: FC<TileRowComponentProps> = ({ isCurrent, word, letterMa
 	return (
 		<div className="tile-row">
 			{ROWS.map((_, index) =>
-				<div key={index} className={`tile ${getHighlightClass(word[index])}`}>
+				<div key={index} className={`tile ${getHighlightClass(index)}`}>
 					<span>
-						{word[index]}
+						{guess?.word[index]}
 					</span>
 				</div>
 			)}
