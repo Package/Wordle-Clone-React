@@ -15,11 +15,26 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ letterHandler, submitHa
 	const TYPE_REF = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		// Hack - trigger auto-focus to capture key press events cuz React doesn't seem to like doing this!
+		// Trigger auto-focus to capture key press events once component is ready.
+		autoFocus();
+	}, []);
+
+	useEffect(() => {
+		// Re-trigger focus on input when page gains focus again. e.g. think user switched tabs etc.
+		window.addEventListener("focus", autoFocus);
+
+		return () => {
+			window.removeEventListener("focus", autoFocus);
+		};
+	}, []);
+
+	function autoFocus() {
+		console.log("Autofocusing.");
+
 		if (TYPE_REF.current) {
 			TYPE_REF.current.focus();
 		}
-	}, []);
+	}
 
 	function keyHandler(event: React.KeyboardEvent) {
 		if (event.key === "Backspace") {
@@ -30,6 +45,8 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ letterHandler, submitHa
 			letterHandler(event.key.toUpperCase());
 		}
 	}
+
+	// Todo - if you switch from typing to pressing, you lose the autofocus and then can't continue typing!
 
 	return (
 		<div className="keyboard">

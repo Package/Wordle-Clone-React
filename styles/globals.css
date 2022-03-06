@@ -27,9 +27,17 @@ header {
   text-align: center;
 }
 
+a, a:visited {
+  color: var(--colour-white);
+}
+
 .game-container {
   text-align: center;
   margin: 1rem 0;
+}
+
+.game-over {
+  margin-bottom: 1rem;
 }
 
 .tile-row {
