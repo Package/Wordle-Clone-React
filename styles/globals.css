@@ -72,6 +72,13 @@ header {
   justify-content: center;
 }
 
+.keyboard-input {
+  background: var(--colour-dark);
+  border: none;
+  outline: none;
+  color: var(--colour-dark);
+}
+
 .letter {
   background: var(--colour-light-grey);
   padding: 1rem;

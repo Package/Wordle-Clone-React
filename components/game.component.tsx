@@ -19,9 +19,7 @@ const GameComponent: FC = () => {
 	const [alert, setAlert] = useState<Alert | null>(null);
 
 	function submitHandler() {
-		if (gameOver || currentWord.length < 5) {
-			return;
-		}
+		if (gameOver || currentWord.length < 5) return;
 
 		const currentWordLower = currentWord.toLowerCase();
 		if (!(VALID_WORDS.includes(currentWordLower) || ANSWERS.includes(currentWordLower))) {
@@ -30,7 +28,6 @@ const GameComponent: FC = () => {
 		}
 
 		const currGuess: Guess = guesses[currentRow];
-
 		for (let index = 0; index < WORD_SIZE; index++) {
 			const currentLetter = currentWord[index].toLowerCase();
 
@@ -42,18 +39,18 @@ const GameComponent: FC = () => {
 			}
 		}
 
-		// Todo - handle better
-		if (currentWordLower === CORRECT_WORD) {
+		const guessedCorrectly = currentWordLower === CORRECT_WORD;
+		if (guessedCorrectly) {
 			setAlert({ message: `Congratulations, you got it right!`, type: AlertType.Success });
 			setGameOver(true);
-			updateGuesses(currGuess);
-			return;
 		}
 
 		updateGuesses(currGuess);
 		setCurrentRow(currentRow + 1);
 		setCurrentWord("");
-		setAlert(null);
+		if (!guessedCorrectly) {
+			setAlert(null);
+		}
 	}
 
 	function letterHandler(letter: string) {
@@ -70,11 +67,10 @@ const GameComponent: FC = () => {
 	}
 
 	function wordHandler(word: string) {
-		const currGuess = guesses[currentRow];
-		currGuess.word = word;
-
 		setCurrentWord(word);
-		updateGuesses(currGuess);
+
+		guesses[currentRow].word = word;
+		updateGuesses(guesses[currentRow]);
 	}
 
 	const updateGuesses = (updated: Guess) => setGuesses(guesses.map((guess, index) => index === currentRow ? updated : guess));
