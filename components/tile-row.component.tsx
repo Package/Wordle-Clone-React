@@ -11,7 +11,7 @@ interface TileRowComponentProps {
 const TileRowComponent: FC<TileRowComponentProps> = ({ isCurrent, guess }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(WORD_SIZE).fill(0), []);
 
-	const getHighlightClass = (index: number): string | null => {
+	function getHighlightClass(index: number): string | null {
 		if (isCurrent || !guess) {
 			return null;
 		}
@@ -24,8 +24,6 @@ const TileRowComponent: FC<TileRowComponentProps> = ({ isCurrent, guess }) => {
 			case LetterState.Incorrect:
 				return "incorrect";
 		}
-
-		return null;
 	}
 
 	return (

@@ -25,7 +25,7 @@ export const AlertComponent: FC<AlertComponentProps> = ({ alert }) => {
 
 	return (
 		<div className={`alert ${getAlertClass()}`}>
-			{alert.message}
+			{alert?.message}
 		</div>
 	)
 }
