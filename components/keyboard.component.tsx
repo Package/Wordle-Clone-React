@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useMemo, useRef } from 'react'
 import { KeyboardSummary } from '../types/KeyboardSummary';
+import { isMobileDevice } from '../util/mobile';
 
 interface KeyboardComponentProps {
 	summary: KeyboardSummary;
@@ -15,6 +16,9 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 
 	const LETTER_REGEX = useMemo<RegExp>(() => new RegExp("^[a-zA-Z]{1}$"), []);
 	const TYPE_REF = useRef<HTMLInputElement>(null);
+	const isMobile = useMemo<boolean>(() => isMobileDevice(), []);
+
+	console.log(`Is Mobile: ${isMobile}`);
 
 	useEffect(() => {
 		// Trigger auto-focus to capture key press events once component is ready.
@@ -32,7 +36,11 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 		};
 	}, []);
 
-	const autoFocus = () => TYPE_REF.current?.focus();
+	function autoFocus() {
+		if (!isMobile) {
+			TYPE_REF.current?.focus();
+		}
+	}
 
 	function keyHandler(event: React.KeyboardEvent) {
 		if (event.key === "Backspace") {

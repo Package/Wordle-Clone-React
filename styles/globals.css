@@ -141,7 +141,7 @@ a, a:visited {
 @media (max-width:600px)  { 
   /* Decrease keyboard size on tablet or smaller. */
   .letter {
-    padding: .5rem;
+    padding: .6rem;
     font-size: .9rem;
   }
 }
