@@ -44,14 +44,27 @@ export class WordleService {
 	}
 
 	static evaluateGuess(guess: Guess, correctWord: string): Guess {
+		let wordMap: Map<string, number> = new Map<string, number>();
+		for (let index = 0; index < WORD_SIZE; index++) {
+			const currentLetter = correctWord[index].toLowerCase();
+			const value = wordMap.get(currentLetter);
+			wordMap.set(currentLetter, value ? value + 1 : 1);
+		}
+
 		for (let index = 0; index < WORD_SIZE; index++) {
 			const currentLetter = guess.word[index].toLowerCase();
+			const letterMapValue = wordMap.get(currentLetter);
 
-			if (currentLetter === correctWord[index]) {
+			if (currentLetter === correctWord[index] && letterMapValue) {
 				guess.states.push(LetterState.Correct);
+				wordMap.set(currentLetter, letterMapValue - 1);
 			} else {
 				const anotherPosition = correctWord.includes(currentLetter);
-				guess.states.push(anotherPosition ? LetterState.WrongPosition : LetterState.Incorrect);
+				guess.states.push(anotherPosition && letterMapValue ? LetterState.WrongPosition : LetterState.Incorrect);
+
+				if (letterMapValue) {
+					wordMap.set(currentLetter, letterMapValue - 1);
+				}
 			}
 		}
 

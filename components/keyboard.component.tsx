@@ -18,8 +18,6 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 	const TYPE_REF = useRef<HTMLInputElement>(null);
 	const isMobile = useMemo<boolean>(() => isMobileDevice(), []);
 
-	console.log(`Is Mobile: ${isMobile}`);
-
 	useEffect(() => {
 		// Trigger auto-focus to capture key press events once component is ready.
 		autoFocus();
