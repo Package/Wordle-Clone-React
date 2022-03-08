@@ -41,6 +41,11 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 	}
 
 	function keyHandler(event: React.KeyboardEvent) {
+		// Skip input if holding Ctrl or Alt
+		if (event.ctrlKey || event.altKey) {
+			return;
+		}
+
 		if (event.key === "Backspace") {
 			deleteHandler();
 		} else if (event.key === "Enter") {
@@ -66,7 +71,7 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 
 	return (
 		<div className="keyboard">
-			<input type="text" ref={TYPE_REF} className="keyboard-input" onKeyDown={keyHandler} />
+			<input type="text" ref={TYPE_REF} autoComplete="off" spellCheck={false} className="keyboard-input" onKeyDown={keyHandler} />
 
 			<div className="keyboard-row">
 				{QWERTY_ROW_ONE.map(letter => (

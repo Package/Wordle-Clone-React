@@ -7,6 +7,7 @@
   --colour-white: #f1f1f1;
   --colour-yellow: #b59f3b;
   --colour-green: #538d4e;
+  --colour-blue: #0d6efd;
 }
 
 * {
@@ -41,7 +42,7 @@ a, a:visited {
 }
 
 .game-over-btn {
-  background: var(--colour-green);
+  background: var(--colour-blue);
   padding: .3rem .5rem;
   color: var(--colour-white);
   border: 0;
@@ -129,7 +130,7 @@ a, a:visited {
 }
 
 .alert-success {
-  background: #155724;
+  background: var(--colour-green);
   color: #d4edda;
 }
 
