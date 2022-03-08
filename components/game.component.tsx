@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { FC, useEffect, useMemo } from 'react'
 import useWordle from '../hooks/useWordle';
 import { StorageService } from '../services/storage.service';
@@ -15,7 +14,7 @@ interface GameComponentProps {
 
 const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => {
 	const ROWS = useMemo<Array<number>>(() => new Array(ROW_SIZE).fill(0), []);
-	const { isGameOver, alert, invalidIndex, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber, initialState });
+	const { isReady, isGameOver, alert, invalidIndex, currentRow, guesses, summary, submitHandler, letterHandler, deleteHandler } = useWordle({ gameNumber, initialState });
 
 	useEffect(() => {
 		StorageService.saveLastPlayedGame(gameNumber);
@@ -24,6 +23,10 @@ const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => 
 	function startNewGame() {
 		StorageService.clearGameState();
 		window.location.replace(`/?gameNumber=${gameNumber + 1}`);
+	}
+
+	if (!isReady) {
+		return <p>Loading...</p>
 	}
 
 	return (

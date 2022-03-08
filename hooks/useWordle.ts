@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { StorageService } from "../services/storage.service";
 import { WordleService } from "../services/wordle.service";
 import { ANSWERS, WORD_SIZE } from "../static-data/words";
@@ -13,6 +13,7 @@ interface UseWorldeProps {
 }
 
 interface UseWordleHook {
+	isReady: boolean;
 	guesses: Guess[];
 	currentRow: number;
 	alert?: Alert;
@@ -26,7 +27,7 @@ interface UseWordleHook {
 }
 
 export default function useWordle(props: UseWorldeProps): UseWordleHook {
-	const CORRECT_WORD = useMemo<string>(() => ANSWERS[props.gameNumber ?? 0], []);
+	const [correctWord, setCorrectWord] = useState<string>("");
 
 	const [alert, setAlert] = useState<Alert | undefined>(props.initialState?.alert);
 
@@ -36,6 +37,10 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 	const [invalidIndex, setInvalidIndex] = useState<number>(-1);
 	const [guesses, setGuesses] = useState<Guess[]>(props.initialState?.guesses ?? WordleService.getDefaultGuesses());
 	const [summary, setSummary] = useState<KeyboardSummary>(props.initialState?.summary ?? { correct: [], incorrect: [], wrongPosition: [] });
+
+	useEffect(() => {
+		setCorrectWord(ANSWERS[props.gameNumber]);
+	}, [props.gameNumber])
 
 	useEffect(() => {
 		StorageService.saveGameState({
@@ -57,7 +62,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 		if (gameOver || currentWord.length < 5) return;
 
 		const currentWordLower = currentWord.toLowerCase();
-		const guessedCorrectly = currentWordLower === CORRECT_WORD;
+		const guessedCorrectly = currentWordLower === correctWord;
 		const currGuess = guesses[currentRow];
 		const numGuessesLeft = guesses.filter(g => g.word.length !== WORD_SIZE).length;
 
@@ -66,7 +71,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 			return;
 		}
 
-		WordleService.evaluateGuess(currGuess, CORRECT_WORD);
+		WordleService.evaluateGuess(currGuess, correctWord);
 		updateGuesses(currGuess);
 
 		setSummary(WordleService.buildSummary(guesses));
@@ -75,7 +80,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 			setAlert({ message: `Congratulations, you got it right!`, type: AlertType.Success });
 			setGameOver(true);
 		} else if (numGuessesLeft === 0) {
-			setAlert({ message: `Sorry, you didn't get the word! It was "${CORRECT_WORD}"`, type: AlertType.Warning });
+			setAlert({ message: `Sorry, you didn't get the word! It was "${correctWord}"`, type: AlertType.Warning });
 			setGameOver(true);
 		} else {
 			setAlert(undefined);
@@ -118,6 +123,7 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
 	const updateGuesses = (updated: Guess) => setGuesses(guesses.map((guess, index) => index === currentRow ? updated : guess));
 
 	return {
+		isReady: (props.gameNumber > 0 && correctWord.length > 0),
 		alert,
 		currentRow,
 		guesses,
