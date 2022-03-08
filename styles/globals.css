@@ -23,9 +23,13 @@ body {
 }
 
 header {
-  padding: .5rem;
+  padding: .75rem .5rem;
   border-bottom: 1px solid var(--colour-dark-grey);
   text-align: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
 }
 
 a, a:visited {

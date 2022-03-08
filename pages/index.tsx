@@ -18,23 +18,22 @@ const Home: NextPage = () => {
 
     const routerGameNumber = Number.parseInt(router.query.gameNumber as string);
     const storageGameNumber = StorageService.getLastPlayedGame();
-    const preferredGameNumber = routerGameNumber || storageGameNumber;
 
     setGameNumber(routerGameNumber || storageGameNumber);
   }, [router]);
 
+  if (gameNumber == -1) {
+    return <p>Loading...</p>
+  }
+
   return (
     <>
-      <NavbarComponent />
+      <NavbarComponent gameNumber={gameNumber} />
 
-      {gameNumber > -1 && (
-        <>
-          <Head>
-            <title>Wordle Clone - Game {gameNumber}</title>
-          </Head>
-          <GameComponent gameNumber={gameNumber} initialState={StorageService.getGameState()} />
-        </>
-      )}
+      <Head>
+        <title>Wordle Clone - Game {gameNumber}</title>
+      </Head>
+      <GameComponent gameNumber={gameNumber} initialState={StorageService.getGameState()} />
     </>
   )
 }

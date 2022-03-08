@@ -1,9 +1,13 @@
 import React, { FC } from 'react'
 
-const NavbarComponent: FC = () => {
+interface NavbarProps {
+	gameNumber: number;
+}
+
+const NavbarComponent: FC<NavbarProps> = ({ gameNumber }) => {
 	return (
 		<header>
-			<h1>Wordle Clone</h1>
+			<h1>Wordle Clone - Game {gameNumber}</h1>
 		</header>
 	)
 }
