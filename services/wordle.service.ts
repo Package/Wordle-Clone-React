@@ -51,23 +51,37 @@ export class WordleService {
 			wordMap.set(currentLetter, value ? value + 1 : 1);
 		}
 
+		const states: LetterState[] = new Array(WORD_SIZE).fill(LetterState.Incorrect);
+
+		// Evaluate correct guesses first
 		for (let index = 0; index < WORD_SIZE; index++) {
 			const currentLetter = guess.word[index].toLowerCase();
 			const letterMapValue = wordMap.get(currentLetter);
 
 			if (currentLetter === correctWord[index] && letterMapValue) {
-				guess.states.push(LetterState.Correct);
+				states[index] = LetterState.Correct;
 				wordMap.set(currentLetter, letterMapValue - 1);
-			} else {
-				const anotherPosition = correctWord.includes(currentLetter);
-				guess.states.push(anotherPosition && letterMapValue ? LetterState.WrongPosition : LetterState.Incorrect);
-
-				if (letterMapValue) {
-					wordMap.set(currentLetter, letterMapValue - 1);
-				}
 			}
 		}
 
+		// Evaluate correct (but wrong position) guesses next
+		for (let index = 0; index < WORD_SIZE; index++) {
+			const currentLetter = guess.word[index].toLowerCase();
+			const letterMapValue = wordMap.get(currentLetter);
+
+			if (currentLetter === correctWord[index]) {
+				continue;
+			}
+
+			const anotherPosition = correctWord.includes(currentLetter);
+			states[index] = anotherPosition && letterMapValue ? LetterState.WrongPosition : LetterState.Incorrect;
+
+			if (letterMapValue) {
+				wordMap.set(currentLetter, letterMapValue - 1);
+			}
+		}
+
+		guess.states = states;
 		return guess;
 	}
 }
