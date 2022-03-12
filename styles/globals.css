@@ -118,6 +118,7 @@ a, a:visited {
   border: none;
   outline: none;
   color: var(--colour-dark);
+  pointer-events:none;
 }
 
 .letter {
@@ -127,7 +128,7 @@ a, a:visited {
   background: var(--colour-light-grey);
   font-size: 1rem;
   font-weight: bold;
-  margin: .25rem;
+  margin: .3rem .25rem;
   border-radius: 4px;
   cursor: pointer;
   width: 48px;
@@ -175,7 +176,7 @@ a, a:visited {
 
 @media (max-width:400px)  { 
   .letter {
-    margin: .2rem .15rem;
+    margin: .3rem .15rem;
   }
 }
 
