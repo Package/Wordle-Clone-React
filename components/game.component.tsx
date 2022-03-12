@@ -31,24 +31,30 @@ const GameComponent: FC<GameComponentProps> = ({ gameNumber, initialState }) => 
 
 	return (
 		<div className="game-container">
-			<AlertComponent alert={alert} />
+			<div className="top">
+				<AlertComponent alert={alert} />
 
-			{isGameOver && (
-				<div className="game-over">
-					<button className="game-over-btn" onClick={startNewGame}>New Game?</button>
+				{isGameOver && (
+					<div className="game-over">
+						<button className="game-over-btn" onClick={startNewGame}>New Game?</button>
+					</div>
+				)}
+
+				<div className="tile-container">
+					{ROWS.map((_, index) => (
+						<TileRowComponent key={`row-${index}`} invalid={invalidIndex === index} isCurrent={isGameOver ? false : currentRow === index} guess={guesses[index]} />
+					))}
 				</div>
-			)}
+			</div>
 
-			{ROWS.map((_, index) => (
-				<TileRowComponent key={`row-${index}`} invalid={invalidIndex === index} isCurrent={isGameOver ? false : currentRow === index} guess={guesses[index]} />
-			))}
-
-			<KeyboardComponent
-				submitHandler={submitHandler}
-				letterHandler={letterHandler}
-				deleteHandler={deleteHandler}
-				summary={summary}
-			/>
+			<div className="bottom">
+				<KeyboardComponent
+					submitHandler={submitHandler}
+					letterHandler={letterHandler}
+					deleteHandler={deleteHandler}
+					summary={summary}
+				/>
+			</div>
 		</div>
 	)
 }

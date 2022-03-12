@@ -20,6 +20,7 @@
 body {
   background: var(--colour-dark);
   color: var(--colour-white);
+  width: 100%;
 }
 
 header {
@@ -36,9 +37,18 @@ a, a:visited {
   color: var(--colour-white);
 }
 
+
 .game-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.top {
+  width: 100%;
+  margin-top: 1rem;
   text-align: center;
-  margin: 1rem 0;
 }
 
 .game-over {
@@ -47,7 +57,7 @@ a, a:visited {
 
 .game-over-btn {
   background: var(--colour-blue);
-  padding: .3rem .5rem;
+  padding: .75rem 1rem;
   color: var(--colour-white);
   border: 0;
   border-radius: 4px;
@@ -143,10 +153,41 @@ a, a:visited {
   color: #e2e3e5;
 }
 
+/* Phones/Tablets */
 @media (max-width:600px)  { 
+  .top {
+    margin-top: 1rem;
+  }
+
+  .alert {
+    padding: .25rem;
+  }
+
   /* Decrease keyboard size on tablet or smaller. */
   .letter {
     padding: .6rem;
-    font-size: .9rem;
+    font-size: 1rem;
+  }
+}
+
+/* Tiny Phones */
+@media (max-width: 350px) {
+  .tile {
+    min-width: 30px;
+    min-height: 30px;
+    border: 2px solid var(--colour-dark-grey);
+    margin: .25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-top: .15rem;
+  }
+
+  .letter {
+    margin: .15rem;
+    font-size: xx-small;
+  }
+
+  .text-small {
+    font-weight: xx-small !important;
   }
 }

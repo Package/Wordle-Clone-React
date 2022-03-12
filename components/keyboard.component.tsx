@@ -86,11 +86,15 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({ summary, letterHandler,
 			</div>
 
 			<div className="keyboard-row">
-				<div className="letter" onClick={_ => submitHandler()}>Enter</div>
+				<div className="letter" onClick={_ => submitHandler()}>
+					⏎
+				</div>
 				{QWERTY_ROW_THREE.map(letter => (
 					<div key={letter} className={`letter ${getLetterHighlight(letter)}`} onClick={_ => letterHandler(letter)}>{letter}</div>
 				))}
-				<div className="letter" onClick={_ => deleteHandler()}>Delete</div>
+				<div className="letter" onClick={_ => deleteHandler()}>
+					⌫
+				</div>
 			</div>
 		</div>
 	)
