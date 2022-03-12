@@ -121,19 +121,23 @@ a, a:visited {
 }
 
 .letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--colour-light-grey);
-  padding: 1rem;
   font-size: 1rem;
   font-weight: bold;
   margin: .25rem;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  width: 48px;
+  height: 48px;
 }
 
 .alert {
   padding: 1rem;
   margin: .5rem auto;
-  width: 100%;
+  width: 90%;
   border-radius: 4px;
   max-width: fit-content;
 }
@@ -163,10 +167,15 @@ a, a:visited {
     padding: .25rem;
   }
 
-  /* Decrease keyboard size on tablet or smaller. */
   .letter {
-    padding: .6rem;
-    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width:400px)  { 
+  .letter {
+    margin: .2rem .15rem;
   }
 }
 
@@ -175,7 +184,7 @@ a, a:visited {
   .tile {
     min-width: 30px;
     min-height: 30px;
-    border: 2px solid var(--colour-dark-grey);
+    border: 1px solid var(--colour-dark-grey);
     margin: .25rem;
     font-size: 1rem;
     font-weight: bold;
@@ -183,11 +192,7 @@ a, a:visited {
   }
 
   .letter {
-    margin: .15rem;
-    font-size: xx-small;
-  }
-
-  .text-small {
-    font-weight: xx-small !important;
+    width: 26px;
+    height: 26px;
   }
 }
