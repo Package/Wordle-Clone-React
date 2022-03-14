@@ -1,10 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import GameComponent from '../components/game.component';
-import NavbarComponent from '../components/navbar.component';
-import { StorageService } from '../services/storage.service';
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import GameComponent from "../components/game.component";
+import NavbarComponent from "../components/navbar.component";
+import { StorageService } from "../services/storage.service";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   }, [router]);
 
   if (gameNumber == -1) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
 
   return (
@@ -33,9 +33,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Wordle Clone - Game {gameNumber}</title>
       </Head>
-      <GameComponent gameNumber={gameNumber} initialState={StorageService.getGameState()} />
+      <GameComponent
+        gameNumber={gameNumber}
+        initialState={StorageService.getGameState()}
+      />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

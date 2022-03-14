@@ -1,8 +1,10 @@
 export interface Alert {
-	message?: string;
-	type: AlertType;
+  message?: string;
+  type: AlertType;
 }
 
 export enum AlertType {
-	Success, Warning, Error
+  Success,
+  Warning,
+  Error
 }

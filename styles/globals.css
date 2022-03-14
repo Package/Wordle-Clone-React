@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 
 :root {
   --colour-dark: #121213;
@@ -24,7 +24,7 @@ body {
 }
 
 header {
-  padding: .75rem .5rem;
+  padding: 0.75rem 0.5rem;
   border-bottom: 1px solid var(--colour-dark-grey);
   text-align: center;
 }
@@ -33,10 +33,10 @@ header h1 {
   font-size: 1.5rem;
 }
 
-a, a:visited {
+a,
+a:visited {
   color: var(--colour-white);
 }
-
 
 .game-container {
   display: flex;
@@ -57,12 +57,12 @@ a, a:visited {
 
 .game-over-btn {
   background: var(--colour-blue);
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   color: var(--colour-white);
   border: 0;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .tile-row {
@@ -75,10 +75,10 @@ a, a:visited {
   min-width: 53px;
   min-height: 53px;
   border: 2px solid var(--colour-dark-grey);
-  margin: .25rem;
+  margin: 0.25rem;
   font-size: 1.5rem;
   font-weight: bold;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 .correct {
@@ -118,7 +118,7 @@ a, a:visited {
   border: none;
   outline: none;
   color: var(--colour-dark);
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .letter {
@@ -128,7 +128,7 @@ a, a:visited {
   background: var(--colour-light-grey);
   font-size: 1rem;
   font-weight: bold;
-  margin: .3rem .25rem;
+  margin: 0.3rem 0.25rem;
   border-radius: 4px;
   cursor: pointer;
   width: 48px;
@@ -137,7 +137,7 @@ a, a:visited {
 
 .alert {
   padding: 1rem;
-  margin: .5rem auto;
+  margin: 0.5rem auto;
   width: 90%;
   border-radius: 4px;
   max-width: fit-content;
@@ -159,13 +159,13 @@ a, a:visited {
 }
 
 /* Phones/Tablets */
-@media (max-width:600px)  { 
+@media (max-width: 600px) {
   .top {
     margin-top: 1rem;
   }
 
   .alert {
-    padding: .25rem;
+    padding: 0.25rem;
   }
 
   .letter {
@@ -174,9 +174,9 @@ a, a:visited {
   }
 }
 
-@media (max-width:400px)  { 
+@media (max-width: 400px) {
   .letter {
-    margin: .3rem .15rem;
+    margin: 0.3rem 0.15rem;
   }
 }
 
@@ -186,10 +186,10 @@ a, a:visited {
     min-width: 30px;
     min-height: 30px;
     border: 1px solid var(--colour-dark-grey);
-    margin: .25rem;
+    margin: 0.25rem;
     font-size: 1rem;
     font-weight: bold;
-    padding-top: .15rem;
+    padding-top: 0.15rem;
   }
 
   .letter {

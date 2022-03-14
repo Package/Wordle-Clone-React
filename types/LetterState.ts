@@ -1,3 +1,5 @@
 export enum LetterState {
-	Correct, Incorrect, WrongPosition
+  Correct,
+  Incorrect,
+  WrongPosition
 }
