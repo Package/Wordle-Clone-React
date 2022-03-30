@@ -37,7 +37,7 @@ const HistoryPage = () => {
       </Head>
 
       <div className="game-container">
-        {history.length === 0 && <p>You haven't finished any games yet!</p>}
+        {history.length === 0 && <p>You have not finished any games yet!</p>}
 
         <div className="game-over">
           <button className="game-over-btn">
