@@ -5,19 +5,22 @@ export class StorageService {
   private static GAME_STATE_KEY = "WORDLE_CLONE_GAME_STATE";
   private static GAME_HISTORY_KEY = "WORDLE_CLONE_GAME_HISTORY";
 
-  static saveGameInHistory(gameState: WordleState) {
+  static getGameHistory(): WordleState[] {
     const historyFromStorageString = this.readFromStorage(
       this.GAME_HISTORY_KEY
     );
 
-    let parsedHistory: WordleState[] = historyFromStorageString
-      ? JSON.parse(historyFromStorageString)
-      : [];
+    return historyFromStorageString ? JSON.parse(historyFromStorageString) : [];
+  }
 
-    let newHistory = [];
+  static saveGameInHistory(gameState: WordleState) {
+    let parsedHistory = this.getGameHistory();
+
     const isInHistoryAlready = parsedHistory.find(
       (hist) => hist.gameNumber === gameState.gameNumber
     );
+
+    let newHistory = [];
     if (isInHistoryAlready) {
       newHistory = parsedHistory.map((history) => {
         if (history.gameNumber === gameState.gameNumber) {
@@ -30,7 +33,6 @@ export class StorageService {
       newHistory = [...parsedHistory, gameState];
     }
 
-    console.log(parsedHistory, newHistory);
     this.writeToStorage(this.GAME_HISTORY_KEY, JSON.stringify(newHistory));
   }
 
@@ -40,20 +42,48 @@ export class StorageService {
 
   static getLastPlayedGame(): number {
     const maybeLastPlayed = this.readFromStorage(this.GAME_NUMBER_KEY);
-    return maybeLastPlayed ? Number.parseInt(maybeLastPlayed) : 1;
+    if (maybeLastPlayed) {
+      // Current or most recently played game:
+      return Number.parseInt(maybeLastPlayed);
+    }
+
+    const gameHistory = this.getGameHistory();
+    if (gameHistory.length > 0) {
+      // +1 as this game has been completed so we want to start them on the next game:
+      return gameHistory[gameHistory.length - 1].gameNumber + 1;
+    }
+
+    return 1;
   }
 
   static saveGameState(gameState: WordleState) {
     this.writeToStorage(this.GAME_STATE_KEY, JSON.stringify(gameState));
   }
 
-  static getGameState(): WordleState | undefined {
-    const initialState = this.readFromStorage(this.GAME_STATE_KEY);
-    if (initialState) {
-      return JSON.parse(initialState);
+  static getGameState(gameNumber: number): WordleState | undefined {
+    console.log(`Loading the game state for game number: ${gameNumber}`);
+
+    const storageState = this.readFromStorage(this.GAME_STATE_KEY);
+
+    // Current of most recently played game:
+    const parsedInitialState: WordleState = storageState
+      ? JSON.parse(storageState)
+      : undefined;
+    if (parsedInitialState && parsedInitialState.gameNumber === gameNumber) {
+      console.log(`Grabbed it from the STATE`);
+      return parsedInitialState;
     }
 
-    return undefined;
+    // Check back in the game history:
+    const gameHistory = this.getGameHistory();
+    const maybeHistory = gameHistory.find(
+      (hist) => hist.gameNumber === gameNumber
+    );
+    if (maybeHistory) {
+      console.log(`Grabbed it from the HISTORY`);
+    }
+
+    return maybeHistory;
   }
 
   static clearGameState() {
