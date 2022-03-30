@@ -122,7 +122,6 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({
       <div className="keyboard-row">
         <div className="letter" onClick={(_) => submitHandler()}>
           <FaArrowCircleRight />
-          {/* ⏎ */}
         </div>
         {QWERTY_ROW_THREE.map((letter) => (
           <div
@@ -135,7 +134,6 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({
         ))}
         <div className="letter" onClick={(_) => deleteHandler()}>
           <FaTimesCircle />
-          {/* ⌫ */}
         </div>
       </div>
     </div>

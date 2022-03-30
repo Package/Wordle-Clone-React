@@ -32,7 +32,11 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <NavbarComponent gameNumber={gameNumber} />
+      <NavbarComponent
+        title={`My Wordle - Game ${gameNumber}`}
+        showHistory={true}
+        showReturnToGame={false}
+      />
 
       <Head>
         <title>My Wordle - Game {gameNumber}</title>
