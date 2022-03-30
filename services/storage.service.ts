@@ -3,6 +3,36 @@ import { WordleState } from "../types/WordleState";
 export class StorageService {
   private static GAME_NUMBER_KEY = "WORDLE_CLONE_GAME_NUM";
   private static GAME_STATE_KEY = "WORDLE_CLONE_GAME_STATE";
+  private static GAME_HISTORY_KEY = "WORDLE_CLONE_GAME_HISTORY";
+
+  static saveGameInHistory(gameState: WordleState) {
+    const historyFromStorageString = this.readFromStorage(
+      this.GAME_HISTORY_KEY
+    );
+
+    let parsedHistory: WordleState[] = historyFromStorageString
+      ? JSON.parse(historyFromStorageString)
+      : [];
+
+    let newHistory = [];
+    const isInHistoryAlready = parsedHistory.find(
+      (hist) => hist.gameNumber === gameState.gameNumber
+    );
+    if (isInHistoryAlready) {
+      newHistory = parsedHistory.map((history) => {
+        if (history.gameNumber === gameState.gameNumber) {
+          return gameState;
+        }
+
+        return history;
+      });
+    } else {
+      newHistory = [...parsedHistory, gameState];
+    }
+
+    console.log(parsedHistory, newHistory);
+    this.writeToStorage(this.GAME_HISTORY_KEY, JSON.stringify(newHistory));
+  }
 
   static saveLastPlayedGame(gameNumber: number) {
     this.writeToStorage(this.GAME_NUMBER_KEY, gameNumber.toString());
