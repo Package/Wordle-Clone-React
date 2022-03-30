@@ -34,11 +34,6 @@ const GameComponent: FC<GameComponentProps> = ({
     StorageService.saveLastPlayedGame(gameNumber);
   }, [gameNumber]);
 
-  function startNewGame() {
-    StorageService.clearGameState();
-    window.location.replace(`/?gameNumber=${gameNumber + 1}`);
-  }
-
   if (!isReady) {
     return <p>Loading...</p>;
   }
@@ -50,8 +45,8 @@ const GameComponent: FC<GameComponentProps> = ({
 
         {isGameOver && (
           <div className="game-over">
-            <button className="game-over-btn" onClick={startNewGame}>
-              New Game?
+            <button className="game-over-btn">
+              <a href={`/?gameNumber=${gameNumber + 1}`}>New Game?</a>
             </button>
           </div>
         )}

@@ -59,15 +59,26 @@ export default function useWordle(props: UseWorldeProps): UseWordleHook {
   }, [props.gameNumber]);
 
   useEffect(() => {
-    StorageService.saveGameState({
+    StorageService.saveGameState(getCurrentGameState());
+  }, [currentRow, guesses, gameOver, currentWord, summary, alert]);
+
+  useEffect(() => {
+    if (gameOver) {
+      StorageService.saveGameInHistory(getCurrentGameState());
+    }
+  }, [gameOver]);
+
+  function getCurrentGameState(): WordleState {
+    return {
+      gameNumber: props.gameNumber,
       currentRow,
       guesses,
       gameOver,
       currentWord,
       summary,
       alert
-    });
-  }, [currentRow, guesses, gameOver, currentWord, summary, alert]);
+    };
+  }
 
   /**
    * Event Handler - Enter/Submit

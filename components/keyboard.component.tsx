@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useMemo, useRef } from "react";
 import { KeyboardSummary } from "../types/KeyboardSummary";
 import { isMobileDevice } from "../util/mobile";
+import { FaTimesCircle, FaArrowCircleRight } from "react-icons/fa";
 
 interface KeyboardComponentProps {
   summary: KeyboardSummary;
@@ -120,7 +121,7 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({
 
       <div className="keyboard-row">
         <div className="letter" onClick={(_) => submitHandler()}>
-          ⏎
+          <FaArrowCircleRight />
         </div>
         {QWERTY_ROW_THREE.map((letter) => (
           <div
@@ -132,7 +133,7 @@ const KeyboardComponent: FC<KeyboardComponentProps> = ({
           </div>
         ))}
         <div className="letter" onClick={(_) => deleteHandler()}>
-          ⌫
+          <FaTimesCircle />
         </div>
       </div>
     </div>

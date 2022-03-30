@@ -24,7 +24,9 @@ body {
 }
 
 header {
-  padding: 0.75rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--colour-dark-grey);
   text-align: center;
 }
@@ -33,9 +35,40 @@ header h1 {
   font-size: 1.5rem;
 }
 
+.history {
+  background: transparent;
+  cursor: pointer;
+  color: var(--colour-white);
+  outline: none;
+  border: none;
+}
+.history svg {
+  width: 24px;
+  height: 24px;
+}
+.history:hover {
+  color: var(--colour-light-grey);
+}
+
 a,
 a:visited {
   color: var(--colour-white);
+}
+
+td,
+th {
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+td {
+  border: 1px solid var(--colour-dark-grey);
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
 }
 
 .game-container {
@@ -43,6 +76,16 @@ a:visited {
   align-items: center;
   height: 100vh;
   flex-direction: column;
+}
+
+.game-history {
+  margin: 0.5rem 0;
+}
+.game-history svg {
+  margin-left: 0.5rem;
+  width: 32px;
+  height: 32px;
+  padding: 0.25rem;
 }
 
 .top {
