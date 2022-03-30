@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import NavbarComponent from "../components/navbar.component";
 import { StorageService } from "../services/storage.service";
-import { WORD_SIZE } from "../static-data/words";
+import { ANSWERS, WORD_SIZE } from "../static-data/words";
 import { WordleState } from "../types/WordleState";
 
 const HistoryPage = () => {
@@ -19,6 +19,8 @@ const HistoryPage = () => {
         highestGameCompleted = currentGame.gameNumber;
       }
     }
+
+    console.log(historyFromStorage);
 
     setNextGameId(highestGameCompleted + 1);
     setHistory(historyFromStorage);
@@ -37,7 +39,9 @@ const HistoryPage = () => {
       </Head>
 
       <div className="game-container">
-        {history.length === 0 && <p>You have not finished any games yet!</p>}
+        {history.length === 0 && (
+          <em className="mt-1 mb-1">You have not finished any games yet!</em>
+        )}
 
         <div className="game-over">
           <button className="game-over-btn">
@@ -55,7 +59,8 @@ const HistoryPage = () => {
                   </a>
                 </td>
                 <td>
-                  {hist.summary.correct.length === WORD_SIZE ? (
+                  {hist.currentWord.toLowerCase() ===
+                  ANSWERS[hist.gameNumber] ? (
                     <FaCheck className="correct" />
                   ) : (
                     <FaTimes className="incorrect" />

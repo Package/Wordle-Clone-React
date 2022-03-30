@@ -64,6 +64,13 @@ td {
   border: 1px solid var(--colour-dark-grey);
 }
 
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
 .game-container {
   display: flex;
   align-items: center;
