@@ -61,8 +61,6 @@ export class StorageService {
   }
 
   static getGameState(gameNumber: number): WordleState | undefined {
-    console.log(`Loading the game state for game number: ${gameNumber}`);
-
     const storageState = this.readFromStorage(this.GAME_STATE_KEY);
 
     // Current of most recently played game:
@@ -70,20 +68,12 @@ export class StorageService {
       ? JSON.parse(storageState)
       : undefined;
     if (parsedInitialState && parsedInitialState.gameNumber === gameNumber) {
-      console.log(`Grabbed it from the STATE`);
       return parsedInitialState;
     }
 
     // Check back in the game history:
     const gameHistory = this.getGameHistory();
-    const maybeHistory = gameHistory.find(
-      (hist) => hist.gameNumber === gameNumber
-    );
-    if (maybeHistory) {
-      console.log(`Grabbed it from the HISTORY`);
-    }
-
-    return maybeHistory;
+    return gameHistory.find((hist) => hist.gameNumber === gameNumber);
   }
 
   static clearGameState() {

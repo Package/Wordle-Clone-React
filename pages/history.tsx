@@ -20,8 +20,6 @@ const HistoryPage = () => {
       }
     }
 
-    console.log(historyFromStorage);
-
     setNextGameId(highestGameCompleted + 1);
     setHistory(historyFromStorage);
   }, []);
